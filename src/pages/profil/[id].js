@@ -1,19 +1,22 @@
 import Head from "next/head";
-import { auth, database, storage } from "@/firebase.js";
-import { onAuthStateChanged } from "firebase/auth";
 import { useRouter } from "next/router";
 import { useMemo, useState } from "react";
-import LogOutbtn from "@/components/logOutBtn";
+import { auth } from "@/firebase.js";
+import { onAuthStateChanged } from "firebase/auth";
+import LogOutbtn from "@/components/logOutBtn.js";
+import AddImg from "@/components/addImg.js";
+import CardImg from "@/components/cardImg";
 
 export default function profil() {
   const [email, setEmail] = useState('');
+  const [idUsers, setidUsers] = useState('');
   const router = useRouter();
 
   useMemo(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
-        console.log(user);
         setEmail(user.email);
+        setidUsers(user.uid);
       } else {
         router.push('/login');
       }
@@ -23,13 +26,19 @@ export default function profil() {
   return (
     <>
       <Head>
-        <title>Profil de { email }</title>
+        <title>Profil de</title>
         <meta name="description" content="Profil on googlePhotoPauvre" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div>
-        <h1>profil de {email}</h1>
+        <h1>profil de { email }</h1>
+        <AddImg
+          idUsers = { idUsers }
+        ></AddImg>
+        <CardImg
+          idUsers = { idUsers }
+        ></CardImg>
         <LogOutbtn />
       </div>
     </>

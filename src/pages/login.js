@@ -1,5 +1,5 @@
 import Head from "next/head";
-import { useState } from "react"
+import { useState } from "react";
 import { useRouter } from "next/router";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "@/firebase.js";
