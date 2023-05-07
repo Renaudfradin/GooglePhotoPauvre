@@ -1,32 +1,44 @@
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useMemo, useState } from "react";
-import { auth } from "@/firebase.js";
+import { auth, storage } from "@/firebase.js";
 import { onAuthStateChanged } from "firebase/auth";
+import { getDownloadURL, ref, list } from "firebase/storage";
 import LogOutbtn from "@/components/logOutBtn.js";
 import AddImg from "@/components/addImg.js";
 import CardImg from "@/components/cardImg";
 
 export default function profil() {
-  const [email, setEmail] = useState('');
-  const [idUsers, setidUsers] = useState('');
+  const [email, setEmail] = useState("");
+  const [idUsers, setidUsers] = useState("");
+  const [dataImg, setdataImg] = useState([]);
   const router = useRouter();
 
   useMemo(() => {
     onAuthStateChanged(auth, (user) => {
-      if (user) {
-        setEmail(user.email);
-        setidUsers(user.uid);
-      } else {
-        router.push('/login');
-      }
-    })
+      if (!user) { return (router.push('/login')) }
+      setEmail(user.email);
+      setidUsers(user.uid);
+      const listRef = ref(storage, `${user.uid}/images/`);
+      list(listRef)
+        .then((response) => {
+          response.items.forEach((imgRef) => {
+            getDownloadURL(imgRef).then((urlImg) => {
+              const pathImg = [imgRef][0]._location.path_;
+              setdataImg(dataImg => [...dataImg, [pathImg,urlImg]]);
+            })
+          })
+        })
+        .catch((error) => {
+          console.log(error);
+        })
+    }) 
   }, [])
 
   return (
     <>
       <Head>
-        <title>Profil de</title>
+        <title>Profil</title>
         <meta name="description" content="Profil on googlePhotoPauvre" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
@@ -35,10 +47,15 @@ export default function profil() {
         <h1>profil de { email }</h1>
         <AddImg
           idUsers = { idUsers }
+          dataImg={ dataImg }
+          setdataImg = { setdataImg }
         ></AddImg>
-        <CardImg
-          idUsers = { idUsers }
-        ></CardImg>
+        {dataImg.map((url, index) => (
+          <CardImg
+            key = { index }
+            urlArray = { url }
+          ></CardImg>
+        ))}
         <LogOutbtn />
       </div>
     </>

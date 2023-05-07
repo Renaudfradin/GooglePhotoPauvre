@@ -1,30 +1,28 @@
 import { useState } from "react";
-import { ref, uploadBytesResumable, } from "firebase/storage";
+import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { storage } from "@/firebase";
 
-export default function addImg({idUsers}) {
+export default function addImg({idUsers,dataImg,setdataImg}) {
   const [image, setImage] = useState("");
 
   const onIsertImage = (e) => {
     e.preventDefault();
-
     const metadata = {
       contentType: 'image/jpeg'
     };
 
     if (image) {
       const imgRef = ref(storage, `${idUsers}/images/${image.name}`);
-      console.log(imgRef);
       uploadBytesResumable(imgRef, image, metadata)
-        .then(() => {
-          setImage(null);
-          console.log("send image");
+        .then((snapshot) => {
+          getDownloadURL(snapshot.ref).then((urlImg) => {
+            const pathImg = [imgRef][0]._location.path_;
+            setdataImg(dataImg => [...dataImg, [pathImg,urlImg]]);
+          })
         })
         .catch((error) => {
           console.log(error);
         })
-    } else {
-      setImage(null);
     }
   }
 

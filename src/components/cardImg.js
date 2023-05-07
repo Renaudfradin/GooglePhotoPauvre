@@ -1,57 +1,33 @@
-import { useMemo, useState } from "react";
-import { auth, storage } from "@/firebase.js";
-import { onAuthStateChanged } from "firebase/auth";
-import { getDownloadURL, list, ref, deleteObject } from "firebase/storage";
+import { storage } from "@/firebase.js";
+import { getDownloadURL, ref, deleteObject } from "firebase/storage";
+import { useRouter } from "next/router";
 
-export default function cardImg() {
-  const [dataImg, setdataImg] = useState([]);
-  const [idImg, setidImg] = useState([]);
+export default function cardImg({ index, urlArray }) {
+  const router = useRouter()
 
   const remove = () => {
-    const refDelImg = ref(storage, `${idImg}`)
+    const refDelImg = ref(storage, `${urlArray[0]}`)
+    console.log(refDelImg);
     deleteObject(refDelImg).then(() => {
-      console.log("img suprimer");
+      console.log(`img supr ${refDelImg}`);
+      router.reload(window.location.pathname)
     }).catch((error) => {
       console.log(error);
     });
   }
 
-  useMemo(() => {
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        const listRef = ref(storage, `${user.uid}/images/`);
-        list(listRef)
-          .then((response) => {
-            response.items.forEach((imgRef) => {
-              getDownloadURL(imgRef).then((urlImg) => {
-                setidImg([imgRef][0]._location.path_);
-                setdataImg((prev)=>[...prev,urlImg]);
-              })
-            })
-          })
-          .catch((error) => {
-            console.log(error);
-          })
-      }
-    })
-  }, [])
-
   return (
-    <div>
-      {dataImg.map((url,index) => (
-        <div key={index}>
-          <img
-            src={url}
-            width="350px"
-            priority
-          ></img>
-          <button
-            onClick={remove}
-          >
-            suprimer
-          </button>
-        </div>
-      ))}
-    </div>
+    <div key={index}>
+      <img
+        src={urlArray[1]}
+        width="350px"
+        priority
+      ></img>
+      <button
+        onClick={remove}
+      >
+        suprimer
+      </button>
+  </div>
   )
 }
