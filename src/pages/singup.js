@@ -1,3 +1,12 @@
+import * as React from 'react';
+import Button from '@mui/material/Button';
+import CssBaseline from '@mui/material/CssBaseline';
+import TextField from '@mui/material/TextField';
+import Link from '@mui/material/Link';
+import Grid from '@mui/material/Grid';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import Container from '@mui/material/Container';
 import Head from "next/head";
 import { useState } from "react";
 import { useRouter } from "next/router";
@@ -32,39 +41,59 @@ export default function singup() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className="container">
-        <h2 className="titleForm">Inscription</h2>
-        <form className="formLogin">
-          <div>
-            <input
-              type="email"
-              label="Email"
-              value={email}
+      <Container component="main" maxWidth="xs">
+        <CssBaseline />
+        <Box
+          sx={{
+            marginTop: 8,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+          }}
+        >
+          <Typography component="h2" variant="h5">
+            Inscription
+          </Typography>
+          <Box component="form" noValidate sx={{ mt: 1 }}>
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              id="email"
+              label="Email Address"
               onChange={(e) => setEmail(e.target.value)}
-              required
-              placeholder="Email"
-              className="inputLogin"
+              name="email"
+              autoComplete="email"
+              autoFocus
             />
-          </div>
-          <div>
-            <input
-              type="password"
-              label="password"
-              value={password}
+            <TextField
+              margin="normal"
+              required
+              fullWidth
               onChange={(e) => setPassword(e.target.value)}
-              required
-              placeholder="password"
-              className="inputLogin"
+              name="password"
+              label="Password"
+              type="password"
+              id="password"
+              autoComplete="current-password"
             />
-          </div>
-          {error ? (<p className="errorMsg">email invalide</p>) :<></>}
-          <button
-            type="submit"
-            onClick={onSubmit}
-            className="btnLog"
-          >Inscription</button>
-        </form>
-      </div>
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              onClick={onSubmit}
+              sx={{ mt: 3, mb: 2 }}
+            >
+              Inscription
+            </Button>
+            <Grid container>
+              <Link href="/login" variant="body2">
+                {"Connexion"}
+              </Link>
+            </Grid>
+          </Box>
+        </Box>
+      </Container>
     </>
   )
 }
