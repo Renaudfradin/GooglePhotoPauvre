@@ -1,3 +1,9 @@
+import * as React from "react";
+import Button from "@mui/material/Button";
+import Card from "@mui/material/Card";
+import CardActions from "@mui/material/CardActions";
+import CardMedia from "@mui/material/CardMedia";
+import Grid from "@mui/material/Grid";
 import { storage } from "@/firebase.js";
 import { getDownloadURL, ref, deleteObject } from "firebase/storage";
 import { useRouter } from "next/router";
@@ -16,18 +22,28 @@ export default function cardImg({ index, urlArray }) {
     });
   }
 
+  // const downloadImg = () => {
+  //   console.log("test");
+  // }
+
   return (
-    <div key={index}>
-      <img
-        src={urlArray[1]}
-        width="350px"
-        priority
-      ></img>
-      <button
-        onClick={remove}
+    <Grid item key={index} xs={12} sm={6} md={4}>
+      <Card
+        sx={{ height: "100%", display: "flex", flexDirection: "column" }}
       >
-        suprimer
-      </button>
-  </div>
+        <CardMedia
+          component="img"
+          sx={{
+            height:"250px"
+          }}
+          src={urlArray[1]}
+          alt={urlArray[0]}
+        />
+        <CardActions sx={{ justifyContent: "center"}}>
+          <Button size="small" onClick={remove} sx={{ color: "warning.main" }}>Suprimer</Button>
+          {/* <Button size="small" onClick={downloadImg}>Télecharger</Button> */}
+        </CardActions>
+      </Card>
+    </Grid>
   )
 }

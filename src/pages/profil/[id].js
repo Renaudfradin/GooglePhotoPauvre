@@ -1,12 +1,17 @@
+import * as React from "react";
+import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
+import Container from "@mui/material/Container";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useMemo, useState } from "react";
 import { auth, storage } from "@/firebase.js";
 import { onAuthStateChanged } from "firebase/auth";
 import { getDownloadURL, ref, list } from "firebase/storage";
-import LogOutbtn from "@/components/logOutBtn.js";
 import AddImg from "@/components/addImg.js";
-import CardImg from "@/components/cardImg";
+import CardImg from "@/components/cardImg.js";
+import Navbar from "@/components/navbar.js";
 
 export default function profil() {
   const [email, setEmail] = useState("");
@@ -43,21 +48,42 @@ export default function profil() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div>
-        <h1>profil de { email }</h1>
-        <AddImg
-          idUsers = { idUsers }
-          dataImg={ dataImg }
-          setdataImg = { setdataImg }
-        ></AddImg>
-        {dataImg.map((url, index) => (
-          <CardImg
-            key = { index }
-            urlArray = { url }
-          ></CardImg>
-        ))}
-        <LogOutbtn />
-      </div>
+      <Navbar />
+      <main>
+        <Box
+          sx={{
+            bgcolor: 'background.paper',
+            pt: 8,
+            pb: 6,
+          }}
+        >
+          <Container maxWidth="xl">
+            <Typography
+              component="h1"
+              variant="h3"
+              align="center"
+              color="text.primary"
+            >
+              Profil de { email }
+            </Typography>
+          </Container>
+          <AddImg
+            idUsers = { idUsers }
+            dataImg={ dataImg }
+            setdataImg = { setdataImg }
+          ></AddImg>
+        </Box>
+        <Container sx={{ py: 8 }} width="xl">
+          <Grid container spacing={4}>
+            {dataImg.map((url, index) => (
+              <CardImg
+                key = { index }
+                urlArray = { url }
+              ></CardImg>
+            ))}
+          </Grid>
+        </Container>
+      </main>
     </>
   )
 }

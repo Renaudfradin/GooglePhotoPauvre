@@ -1,3 +1,4 @@
+import Button from "@mui/material/Button";
 import { auth } from "@/firebase";
 import { signOut } from "firebase/auth";
 import { useRouter } from "next/router";
@@ -14,10 +15,14 @@ export default function logOutbtn() {
       })
   }
   return (
-    <button
-      type="submit"
+    <Button
+      color="info"
+      variant="contained"
+      component="span"
       onClick={logOut}
-      className="btnLogOut"
-    >Deconnexion</button>
+      sx={{ bgcolor: 'info.main' }}
+    >
+      Deconnexion
+    </Button>
   )
 }

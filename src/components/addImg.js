@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { storage } from "@/firebase";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
 
 export default function addImg({idUsers,dataImg,setdataImg}) {
   const [image, setImage] = useState("");
@@ -27,22 +29,25 @@ export default function addImg({idUsers,dataImg,setdataImg}) {
   }
 
   return (
-    <form className="formTasks">
-        <div className="blockInputInfo">
-          <input
-            type="file"
-            onChange={(e) => {
-              setImage(e.target.files[0])
-            }}
-            className="inputTasks"
-            accept=".jpg, .jpeg, .png"
-          />
-        </div>
-      <button
+    <Box sx={{ display: "flex", justifyContent: "center", flexDirection: "column", alignItems: "center" }}>
+      <div className="blockInputInfo">
+        <input
+          type="file"
+          onChange={(e) => {
+            setImage(e.target.files[0])
+          }}
+          className="inputTasks"
+          accept=".jpg, .jpeg, .png"
+        />
+      </div>
+      <Button
         type="submit"
+        variant="contained"
         onClick={onIsertImage}
-        className="btnAdd"
-      >Ajouter l'image</button>
-    </form>
+        sx={{ maxWidth: "sm" }}
+      >
+        Ajouter l'image
+      </Button>
+    </Box>
   )
 }
