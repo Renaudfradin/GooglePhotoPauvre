@@ -4,7 +4,7 @@ import { storage } from "@/firebase";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 
-export default function addImg({idUsers,dataImg,setdataImg}) {
+export default function AddImg({idUsers,dataImg,setdataImg}) {
   const [image, setImage] = useState("");
 
   const onIsertImage = (e) => {

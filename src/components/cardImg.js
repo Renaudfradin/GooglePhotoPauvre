@@ -8,7 +8,7 @@ import { storage } from "@/firebase.js";
 import { getDownloadURL, ref, deleteObject } from "firebase/storage";
 import { useRouter } from "next/router";
 
-export default function cardImg({ index, urlArray }) {
+export default function CardImg({ index, urlArray }) {
   const router = useRouter()
 
   const remove = () => {

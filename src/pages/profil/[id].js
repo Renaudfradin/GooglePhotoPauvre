@@ -13,7 +13,7 @@ import AddImg from "@/components/addImg.js";
 import CardImg from "@/components/cardImg.js";
 import Navbar from "@/components/navbar.js";
 
-export default function profil() {
+export default function Profil() {
   const [email, setEmail] = useState("");
   const [idUsers, setidUsers] = useState("");
   const [dataImg, setdataImg] = useState([]);

@@ -11,9 +11,9 @@ import { useState } from "react";
 import { useRouter } from "next/router";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "@/firebase.js";
-import Navbar from "@/components/navbar.js";
+import Navbar from "@/components/navbar";
 
-export default function singup() {
+export default function Singup() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");

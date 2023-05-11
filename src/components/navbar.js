@@ -5,12 +5,12 @@ import Typography from "@mui/material/Typography";
 import Link from "@mui/material/Link";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
-import LogOutbtn from "./logOutBtn";
 import { useEffect, useState } from "react";
 import { auth } from "@/firebase.js";
 import { onAuthStateChanged } from "firebase/auth";
+import LogOutbtn from "./logOutBtn";
 
-export default function navbar() {
+export default function Navbar() {
   const [user, setUser] = useState("");
 
   useEffect(() => {
@@ -29,7 +29,7 @@ export default function navbar() {
           </Typography>
         </Link>
         <Box>
-          {user ? <LogOutbtn /> : <>
+          {user ? <LogOutbtn />: <>
             <Button
               color="info"
               variant="contained"
