@@ -46,7 +46,7 @@ export default function AddImg({idUsers,dataImg,setdataImg}) {
         onClick={onIsertImage}
         sx={{ maxWidth: "sm" }}
       >
-        Ajouter l'image
+        Ajouter l&apos;image
       </Button>
     </Box>
   )
